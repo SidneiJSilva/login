@@ -12,21 +12,21 @@ const RequireParams: React.FC<{ children: React.ReactNode }> = ({
 	const [loading, setLoading] = useState(true); // já começa carregando
 
 	const appId = searchParams.get("appId");
-	const appPageId = searchParams.get("appPageId");
+	const callBackUrl = searchParams.get("callBackUrl");
 
 	useEffect(() => {
 		const validate = async () => {
-			if (!appId || !appPageId) {
+			if (!appId || !callBackUrl) {
 				navigate("/error");
 				return;
 			}
 
-			const { allowedApp, allowedAppPage } = await checkParams(
+			const { allowedApp, allowedCallBackUrl } = await checkParams(
 				appId,
-				appPageId
+				callBackUrl
 			);
-
-			if (!allowedApp || !allowedAppPage) {
+			allowedCallBackUrl;
+			if (!allowedApp || !allowedCallBackUrl) {
 				navigate("/error");
 				return;
 			}
@@ -35,7 +35,7 @@ const RequireParams: React.FC<{ children: React.ReactNode }> = ({
 		};
 
 		validate();
-	}, [appId, appPageId, navigate, checkParams]);
+	}, []);
 
 	if (loading) {
 		return <LoadingFullScreen />;

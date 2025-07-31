@@ -1,11 +1,11 @@
 import { getDatabase, ref, child, get } from "firebase/database";
 
 export class GuardService {
-	static async checkParams(appId: string, appPageId: string) {
+	static async checkParams(appId: string, callBackUrl: string) {
 		const dbRef = ref(getDatabase());
 
 		let allowedApp = false;
-		let allowedAppPage = false;
+		let allowedCallBackUrl = false;
 
 		try {
 			const appSnapshot = await get(child(dbRef, `loginAllowedApps/${appId}`));
@@ -16,13 +16,13 @@ export class GuardService {
 
 		try {
 			const pageSnapshot = await get(
-				child(dbRef, `loginAllowedPages/${appPageId}`)
+				child(dbRef, `loginAllowedUrl/${callBackUrl}`)
 			);
-			allowedAppPage = pageSnapshot.exists();
+			allowedCallBackUrl = pageSnapshot.exists();
 		} catch (error) {
 			console.error("Erro ao verificar allowedAppPage:", error);
 		}
 
-		return { allowedApp, allowedAppPage };
+		return { allowedApp, allowedCallBackUrl };
 	}
 }
