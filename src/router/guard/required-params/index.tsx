@@ -9,7 +9,7 @@ const RequireParams: React.FC<{ children: React.ReactNode }> = ({
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
 	const { checkParams } = GuardService;
-	const [loading, setLoading] = useState(true); // já começa carregando
+	const [loading, setLoading] = useState(true);
 
 	const appId = searchParams.get("appId");
 	const callBackUrl = searchParams.get("callBackUrl");
