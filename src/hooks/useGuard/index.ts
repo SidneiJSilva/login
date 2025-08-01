@@ -34,9 +34,6 @@ export const useGuard = () => {
 				return;
 			}
 
-			console.log("callBackUrlData => ", callBackUrlData);
-			console.log("app data => ", appData);
-
 			setCallBackUrl(callBackUrlData);
 			setAppData(appData);
 		} catch (error) {

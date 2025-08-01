@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { GuardService } from "@/services";
 import LoadingFullScreen from "@/components/atoms/LoadingFullScreen";
 import { guardStore } from "@/stores";
 import { useGuard } from "@/hooks";
