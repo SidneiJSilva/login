@@ -1,13 +1,15 @@
 import SInputText from "@/components/atoms/inputs/SInputText";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 import { useLogin } from "@/hooks";
 import { useState } from "react";
+import { guardStore } from "@/stores";
 
 export default function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const { login } = useLogin();
+	const { appData } = guardStore();
 
 	const handleLoginOnChange = async () => {
 		await login(email, password);
@@ -15,11 +17,34 @@ export default function Login() {
 
 	return (
 		<div style={{ width: "300px" }}>
-			<Box sx={{ display: "flex", justifyContent: "center" }}>
-				<h2>Login</h2>
-			</Box>
-
 			<Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
+				{appData.imageUrl ? (
+					<Box
+						sx={{
+							display: "flex",
+							justifyContent: "center",
+						}}
+					>
+						<img width={150} height={150} src={appData.imageUrl} />
+					</Box>
+				) : (
+					""
+				)}
+
+				{appData.appName ? (
+					<Box
+						sx={{
+							display: "flex",
+							justifyContent: "center",
+						}}
+					>
+						<Typography variant="h5" component="div" fontWeight={700}>
+							{appData.appName}
+						</Typography>
+					</Box>
+				) : (
+					""
+				)}
 				<SInputText
 					label="Email"
 					name="email"
@@ -37,7 +62,7 @@ export default function Login() {
 				/>
 
 				<Button variant="contained" fullWidth onClick={handleLoginOnChange}>
-					Acessar
+					LOGIN
 				</Button>
 			</Box>
 		</div>

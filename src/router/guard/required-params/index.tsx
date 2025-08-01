@@ -1,43 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { GuardService } from "@/services";
 import LoadingFullScreen from "@/components/atoms/LoadingFullScreen";
+import { guardStore } from "@/stores";
+import { useGuard } from "@/hooks";
 
 const RequireParams: React.FC<{ children: React.ReactNode }> = ({
 	children,
 }) => {
-	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
-	const { checkParams } = GuardService;
-	const [loading, setLoading] = useState(true);
+	const { isCheckingData } = guardStore();
+	const { checkParams } = useGuard();
 
 	const appId = searchParams.get("appId");
 	const callBackUrl = searchParams.get("callBackUrl");
 
 	useEffect(() => {
 		const validate = async () => {
-			if (!appId || !callBackUrl) {
-				navigate("/error");
-				return;
-			}
-
-			const { allowedApp, allowedCallBackUrl } = await checkParams(
-				appId,
-				callBackUrl
-			);
-			allowedCallBackUrl;
-			if (!allowedApp || !allowedCallBackUrl) {
-				navigate("/error");
-				return;
-			}
-
-			setLoading(false);
+			await checkParams(appId || "", callBackUrl || "");
 		};
 
 		validate();
 	}, []);
 
-	if (loading) {
+	if (isCheckingData) {
 		return <LoadingFullScreen />;
 	}
 
