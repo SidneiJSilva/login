@@ -9,8 +9,6 @@ const RequireParams: React.FC<{ children: React.ReactNode }> = ({
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		setIsLoading(true);
-
 		const validate = async () => {
 			const userUuid = localStorage.getItem("login-app-uid");
 
