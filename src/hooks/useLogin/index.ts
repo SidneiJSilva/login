@@ -1,8 +1,9 @@
 import { LoginService } from "@/services";
-import { guardStore } from "@/stores";
+import { guardStore, loginStore } from "@/stores";
 
 export const useLogin = () => {
 	const { callBackUrl } = guardStore();
+	const { setIsLoading } = loginStore();
 
 	const handleLoginSuccess = () => {
 		sessionStorage.setItem("loginSuccessPass", "true");
@@ -18,6 +19,8 @@ export const useLogin = () => {
 	};
 
 	const login = async (email: string, password: string) => {
+		setIsLoading(true);
+
 		try {
 			const userCredential = await LoginService.login(email, password);
 
@@ -29,10 +32,14 @@ export const useLogin = () => {
 		} catch (error) {
 			// TODO -> handle errors
 			console.log("FIREBASE ERROR => ", error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
 	const checkLogin = async (userUuid: string) => {
+		setIsLoading(true);
+
 		try {
 			const isLogged = await LoginService.checkLoggedUser(userUuid);
 
@@ -42,6 +49,8 @@ export const useLogin = () => {
 		} catch (error) {
 			// TODO -> handle errors
 			console.log("FIREBASE ERROR => ", error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 

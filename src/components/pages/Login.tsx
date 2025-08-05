@@ -3,13 +3,14 @@ import { Box, Button, Typography } from "@mui/material";
 
 import { useLogin } from "@/hooks";
 import { useState } from "react";
-import { guardStore } from "@/stores";
+import { guardStore, loginStore } from "@/stores";
 
 export default function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const { login } = useLogin();
 	const { appData } = guardStore();
+	const { isLoading } = loginStore();
 
 	const handleLoginOnChange = async () => {
 		await login(email, password);
@@ -61,7 +62,12 @@ export default function Login() {
 					onChange={(e) => setPassword(e.target.value)}
 				/>
 
-				<Button variant="contained" fullWidth onClick={handleLoginOnChange}>
+				<Button
+					variant="contained"
+					loading={isLoading}
+					fullWidth
+					onClick={handleLoginOnChange}
+				>
 					LOGIN
 				</Button>
 			</Box>
