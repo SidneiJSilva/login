@@ -1,17 +1,17 @@
 import { LoginService } from "@/services";
 import { guardStore, loginStore } from "@/stores";
+import { useMessage } from "@/hooks/useMessage";
 
 export const useLogin = () => {
 	const { callBackUrl } = guardStore();
 	const { setIsLoading } = loginStore();
+	const { handleMessage } = useMessage();
 
 	const handleLoginSuccess = () => {
 		sessionStorage.setItem("loginSuccessPass", "true");
 
-		// A URL do seu container em produção
 		const containerUrl = "https://territories-container.vercel.app";
 
-		// Em vez de redirecionar, envie uma mensagem para o container
 		console.log(
 			"[loginApp] Login bem-sucedido. Enviando mensagem para o container."
 		);
@@ -30,8 +30,7 @@ export const useLogin = () => {
 
 			handleLoginSuccess();
 		} catch (error) {
-			// TODO -> handle errors
-			console.log("FIREBASE ERROR => ", error);
+			handleMessage(true, "Email ou password incorreto.", "error");
 		} finally {
 			setIsLoading(false);
 		}
@@ -47,8 +46,7 @@ export const useLogin = () => {
 				handleLoginSuccess();
 			}
 		} catch (error) {
-			// TODO -> handle errors
-			console.log("FIREBASE ERROR => ", error);
+			handleMessage(true, "Erro na autenticação.", "error");
 		} finally {
 			setIsLoading(false);
 		}

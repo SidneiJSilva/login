@@ -1,9 +1,11 @@
 import SInputText from "@/components/atoms/inputs/SInputText";
 import { Box, Button, Typography } from "@mui/material";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
-import { useLogin } from "@/hooks";
+import { useLogin, useMessage } from "@/hooks";
 import { useState } from "react";
-import { guardStore, loginStore } from "@/stores";
+import { guardStore, loginStore, messageStore } from "@/stores";
 
 export default function Login() {
 	const [email, setEmail] = useState("");
@@ -11,6 +13,8 @@ export default function Login() {
 	const { login } = useLogin();
 	const { appData } = guardStore();
 	const { isLoading } = loginStore();
+	const { closeMessage } = useMessage();
+	const { openMessage, message, messageType } = messageStore();
 
 	const handleLoginOnChange = async () => {
 		await login(email, password);
@@ -71,6 +75,22 @@ export default function Login() {
 					LOGIN
 				</Button>
 			</Box>
+
+			<Snackbar
+				open={openMessage}
+				autoHideDuration={4000}
+				onClose={closeMessage}
+				anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+			>
+				<Alert
+					onClose={closeMessage}
+					severity={messageType}
+					variant="filled"
+					sx={{ width: "100%" }}
+				>
+					{message}
+				</Alert>
+			</Snackbar>
 		</div>
 	);
 }
