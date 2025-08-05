@@ -14,7 +14,7 @@ export const useGuard = () => {
 
 	const checkParams = async (appId: string, callBackUrl: string) => {
 		if (!appId || !callBackUrl) {
-			navigate("/error");
+			navigate("error");
 			return;
 		}
 
@@ -30,7 +30,7 @@ export const useGuard = () => {
 			);
 
 			if (!appData || !callBackUrlData) {
-				navigate("/error");
+				navigate("error");
 				return;
 			}
 

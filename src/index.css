@@ -24,11 +24,24 @@ a:hover {
 
 body {
 	margin: 0;
+}
+
+/* CORREÇÃO: Adicionado o ponto (.) para criar um seletor de classe válido */
+.login-app-wrapper {
+	/* Posiciona o wrapper para preencher o viewport */
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw; /* 100% da largura do viewport */
+	height: 100vh; /* 100% da altura do viewport */
+
+	/* Agora, use flexbox para centrar o conteúdo DENTRO deste wrapper */
 	display: flex;
-	justify-content: center; /* horizontal centering */
-	align-items: center; /* vertical centering */
-	min-width: 320px;
-	min-height: 100vh;
+	justify-content: center;
+	align-items: center;
+
+	/* Mantém o fundo escuro que estava antes no body */
+	background-color: #242424;
 }
 
 h1 {
@@ -65,5 +78,9 @@ button:focus-visible {
 	}
 	button {
 		background-color: #f9f9f9;
+	}
+	/* Garante que o fundo muda no tema claro */
+	.login-app-wrapper {
+		background-color: #ffffff;
 	}
 }

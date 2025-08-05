@@ -12,6 +12,8 @@ export const useLogin = () => {
 
 			localStorage.setItem("login-app-uid", userCredential.user.uid);
 
+			sessionStorage.setItem("loginSuccessPass", "true");
+
 			window.location.replace(callBackUrl);
 		} catch (error) {
 			// TODO -> handle errors
@@ -24,6 +26,8 @@ export const useLogin = () => {
 			const isLogged = await LoginService.checkLoggedUser(userUuid);
 
 			if (isLogged && callBackUrl) {
+				sessionStorage.setItem("loginSuccessPass", "true");
+
 				window.location.replace(callBackUrl);
 			}
 		} catch (error) {

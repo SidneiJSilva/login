@@ -1,11 +1,15 @@
-// import { StrictMode } from "react";
+// loginApp/src/main.tsx
+import React from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider } from "react-router";
+import LoginRoutes from "./App"; // Importamos o componente com as rotas
 import "./index.css";
-import AppRoutes from "@/router";
+import { BrowserRouter } from "react-router-dom"; // Importamos o BrowserRouter aqui
 
 createRoot(document.getElementById("root") as HTMLElement).render(
-	// <StrictMode>
-	<RouterProvider router={AppRoutes}></RouterProvider>
-	// </StrictMode>
+	<React.StrictMode>
+		{/* Para rodar a app de forma isolada, envolvemos com o BrowserRouter aqui */}
+		<BrowserRouter>
+			<LoginRoutes />
+		</BrowserRouter>
+	</React.StrictMode>
 );
