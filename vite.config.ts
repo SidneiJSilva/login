@@ -25,6 +25,7 @@ export default defineConfig({
 		target: "esnext",
 		minify: false,
 		cssCodeSplit: false,
+		modulePreload: false,
 	},
 	preview: {
 		port: 4173,

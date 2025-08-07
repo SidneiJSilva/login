@@ -10,32 +10,37 @@ export const useGuard = () => {
 		setAppId,
 		setCallBackUrlId,
 		setIsCheckingData,
+		setCallBackOrigin,
 	} = guardStore();
 
-	const checkParams = async (appId: string, callBackUrl: string) => {
-		if (!appId || !callBackUrl) {
+	const checkParams = async (
+		appId: string,
+		callBackUrl: string,
+		callBackOrigin: string
+	) => {
+		if (!appId || !callBackUrl || !callBackOrigin) {
 			navigate("error");
 			return;
 		}
 
 		setCallBackUrlId(callBackUrl);
 		setAppId(appId);
+		setCallBackOrigin(callBackOrigin);
 
 		setIsCheckingData(true);
 
 		try {
-			const { appData, callBackUrlData } = await GuardService.checkParams(
-				appId,
-				callBackUrl
-			);
+			const { appData, callBackUrlData, callBackOriginData } =
+				await GuardService.checkParams(appId, callBackUrl, callBackOrigin);
 
-			if (!appData || !callBackUrlData) {
+			if (!appData || !callBackUrlData || !callBackOriginData) {
 				navigate("error");
 				return;
 			}
 
 			setCallBackUrl(callBackUrlData);
 			setAppData(appData);
+			setCallBackOrigin(callBackOriginData);
 		} catch (error) {
 			console.log("FIREBASE ERROR => ", error);
 		} finally {

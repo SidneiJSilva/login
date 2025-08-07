@@ -13,10 +13,11 @@ const RequireParams: React.FC<{ children: React.ReactNode }> = ({
 
 	const appId = searchParams.get("appId");
 	const callBackUrl = searchParams.get("callBackUrl");
+	const callBackOrigin = searchParams.get("callBackOrigin");
 
 	useEffect(() => {
 		const validate = async () => {
-			await checkParams(appId || "", callBackUrl || "");
+			await checkParams(appId || "", callBackUrl || "", callBackOrigin || "");
 		};
 
 		validate();

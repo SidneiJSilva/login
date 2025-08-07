@@ -3,19 +3,17 @@ import { guardStore, loginStore } from "@/stores";
 import { useMessage } from "@/hooks/useMessage";
 
 export const useLogin = () => {
-	const { callBackUrl } = guardStore();
+	const { callBackUrl, callBackOrigin } = guardStore();
 	const { setIsLoading } = loginStore();
 	const { handleMessage } = useMessage();
 
 	const handleLoginSuccess = () => {
 		sessionStorage.setItem("loginSuccessPass", "true");
 
-		const containerUrl = "https://territories-container.vercel.app";
-
 		console.log(
 			"[loginApp] Login bem-sucedido. Enviando mensagem para o container."
 		);
-		window.parent.postMessage({ type: "LOGIN_SUCCESS" }, containerUrl);
+		window.parent.postMessage({ type: "LOGIN_SUCCESS" }, callBackOrigin);
 	};
 
 	const login = async (email: string, password: string) => {

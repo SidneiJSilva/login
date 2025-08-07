@@ -11,12 +11,14 @@ interface GuardStore {
 	appId: string;
 	appData: AppData;
 	isCheckingData: boolean;
+	callBackOrigin: string;
 
 	setCallBackUrl: (callBackUrl: string) => void;
 	setCallBackUrlId: (callBackUrlId: string) => void;
 	setAppId: (appId: string) => void;
 	setAppData: (appData: AppData) => void;
 	setIsCheckingData: (isCheckingData: boolean) => void;
+	setCallBackOrigin: (appId: string) => void;
 }
 
 export const guardStore = create<GuardStore>((set) => ({
@@ -25,10 +27,12 @@ export const guardStore = create<GuardStore>((set) => ({
 	appId: "",
 	appData: { imageUrl: "", appName: "" },
 	isCheckingData: false,
+	callBackOrigin: "",
 
 	setCallBackUrl: (callBackUrl) => set({ callBackUrl }),
 	setCallBackUrlId: (callBackUrlId) => set({ callBackUrlId }),
 	setAppId: (appId) => set({ appId }),
 	setAppData: (appData: AppData) => set({ appData }),
 	setIsCheckingData: (isCheckingData: boolean) => set({ isCheckingData }),
+	setCallBackOrigin: (callBackOrigin) => set({ callBackOrigin }),
 }));
