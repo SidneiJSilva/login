@@ -3,6 +3,8 @@ import { create } from "zustand";
 interface AppData {
 	imageUrl: string;
 	appName: string;
+	manageUser: boolean;
+	resetPassword: boolean;
 }
 
 interface GuardStore {
@@ -25,7 +27,12 @@ export const guardStore = create<GuardStore>((set) => ({
 	callBackUrl: "",
 	callBackUrlId: "",
 	appId: "",
-	appData: { imageUrl: "", appName: "" },
+	appData: {
+		imageUrl: "",
+		appName: "",
+		manageUser: false,
+		resetPassword: false,
+	},
 	isCheckingData: false,
 	callBackOrigin: "",
 

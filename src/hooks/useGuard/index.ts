@@ -33,6 +33,8 @@ export const useGuard = () => {
 			const { appData, callBackUrlData, callBackOriginData } =
 				await GuardService.checkParams(appId, callBackUrl, callBackOrigin);
 
+			console.log("APP DATA => ", appData.manageUser);
+
 			if (!appData || !callBackUrlData || !callBackOriginData) {
 				navigate("error");
 				return;

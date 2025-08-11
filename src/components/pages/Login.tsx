@@ -16,6 +16,8 @@ export default function Login() {
 	const { closeMessage } = useMessage();
 	const { openMessage, message, messageType } = messageStore();
 
+	console.log("APP DATA 2 => ", appData);
+
 	const handleLoginOnChange = async () => {
 		await login(email, password);
 	};
@@ -58,13 +60,35 @@ export default function Login() {
 					onChange={(e) => setEmail(e.target.value)}
 				/>
 
-				<SInputText
-					label="Password"
-					name="password"
-					type="password"
-					value={password}
-					onChange={(e) => setPassword(e.target.value)}
-				/>
+				<Box>
+					<SInputText
+						label="Password"
+						name="password"
+						type="password"
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
+					/>
+
+					{appData.resetPassword ? (
+						<Box
+							sx={{
+								display: "flex",
+								justifyContent: "center",
+								alignItems: "center",
+								gap: 1,
+								fontSize: "0.8rem",
+							}}
+						>
+							<p>Esqueceu a senha?</p>
+
+							<Box sx={{ cursor: "pointer" }}>
+								<a>Recuperar</a>
+							</Box>
+						</Box>
+					) : (
+						""
+					)}
+				</Box>
 
 				<Button
 					variant="contained"
@@ -74,6 +98,26 @@ export default function Login() {
 				>
 					LOGIN
 				</Button>
+
+				{appData.manageUser ? (
+					<Box
+						sx={{
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+							gap: 1,
+							fontSize: "0.8rem",
+						}}
+					>
+						<p>Não possui um conta?</p>
+
+						<Box sx={{ cursor: "pointer" }}>
+							<a>Criar conta</a>
+						</Box>
+					</Box>
+				) : (
+					""
+				)}
 			</Box>
 
 			<Snackbar
