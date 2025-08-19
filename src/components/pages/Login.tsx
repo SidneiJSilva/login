@@ -16,8 +16,6 @@ export default function Login() {
 	const { closeMessage } = useMessage();
 	const { openMessage, message, messageType } = messageStore();
 
-	console.log("APP DATA 2 => ", appData);
-
 	const handleLoginOnChange = async () => {
 		await login(email, password);
 	};
