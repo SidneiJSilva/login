@@ -12,6 +12,7 @@ export default defineConfig({
 			filename: "remoteEntry.js",
 			exposes: {
 				"./App": "./src/App.tsx",
+				"./auth": "./src/services/auth/index.ts",
 			},
 			shared: ["react", "react-dom", "react-router-dom"],
 		}),

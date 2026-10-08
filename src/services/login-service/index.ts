@@ -7,7 +7,7 @@ export class LoginService {
 		const userCredential = await signInWithEmailAndPassword(
 			firebaseAuth,
 			email,
-			password
+			password,
 		);
 
 		return userCredential;
@@ -33,5 +33,15 @@ export class LoginService {
 		} catch (error) {
 			console.error("Erro ao verificar allowedApp:", error);
 		}
+	}
+
+	static async getIdToken() {
+		const user = firebaseAuth.currentUser;
+
+		if (!user) {
+			return null;
+		}
+
+		return user.getIdToken();
 	}
 }

@@ -7,13 +7,22 @@ export const useLogin = () => {
 	const { setIsLoading } = loginStore();
 	const { handleMessage } = useMessage();
 
-	const handleLoginSuccess = () => {
+	const handleLoginSuccess = async () => {
 		sessionStorage.setItem("loginSuccessPass", "true");
 
+		const token = await LoginService.getIdToken();
+
+		if (!token) {
+			console.error("[loginApp] Não foi possível obter o Firebase ID token.");
+			return;
+		}
+
 		console.log(
-			"[loginApp] Login bem-sucedido. Enviando mensagem para o container."
+			"[loginApp] Login bem-sucedido. Enviando mensagem para o container.",
 		);
-		window.parent.postMessage({ type: "LOGIN_SUCCESS" }, callBackOrigin);
+
+		console.log("vou enviar token");
+		window.parent.postMessage({ type: "LOGIN_SUCCESS", token }, callBackOrigin);
 	};
 
 	const login = async (email: string, password: string) => {
@@ -26,7 +35,7 @@ export const useLogin = () => {
 
 			localStorage.setItem("login-app-uid", userCredential.user.uid);
 
-			handleLoginSuccess();
+			await handleLoginSuccess();
 		} catch (error) {
 			handleMessage(true, "Email ou password incorreto.", "error");
 		} finally {
@@ -41,7 +50,7 @@ export const useLogin = () => {
 			const isLogged = await LoginService.checkLoggedUser(userUuid);
 
 			if (isLogged && callBackUrl) {
-				handleLoginSuccess();
+				await handleLoginSuccess();
 			}
 		} catch (error) {
 			handleMessage(true, "Erro na autenticação.", "error");
